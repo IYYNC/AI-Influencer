@@ -85,14 +85,17 @@ We used Google Colab with a T4 GPU runtime to train our models. Colab provides a
 - Preprocess the images (resize, normalize).
 - Combine the two categories of images into a single dataset.
 - Build and train a GAN using the same architecture as Model 1.
+
 **Combining and Labeling Two Different Categories of Photos**
 
 - Combining the Datasets: The blonde female images and food images were loaded separately and then combined into a single dataset to ensure diverse training data.
 - Preprocessing: Each image, regardless of category, was resized to a uniform size of 128x128 pixels and normalized to a range of [-1, 1].
 - Training Approach: The combined dataset was shuffled to ensure that the GAN receives a mix of both categories during each training iteration.
+
 **Generator and Discriminator Architectures**
 
 - The generator and discriminator for this model have similar architectures to Model 1 but are optimized for a diverse dataset.
+
 **Training Process**
 
 - Train the discriminator on real and fake images.
