@@ -60,3 +60,9 @@ With the generated images, we plan to build an Instagram account for our AI infl
 - Deciding on further investments (e.g., subscriptions for AI tools) based on the success of the account.
 ## Conclusion
 This project demonstrates the potential of GANs in creating AI-generated content for social media. While there are challenges in achieving high-quality outputs, leveraging existing AI tools and focusing on a strategic social media plan can lead to successful implementation and monetization of an AI influencer persona.
+## Credits
+This project was a collaborative effort, and I would like to thank our team members for their contributions:
+
+**Jodie Chen**
+**Florentina Santosa**
+**Manickashree Thayumana Sundaram**
