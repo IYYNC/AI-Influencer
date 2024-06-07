@@ -15,8 +15,8 @@ We scraped images from Getty Images, focusing on two categories:
 - 5000 images of various food items.
 These images were stored in Google Drive for easy access and management.
 
-## Step 2: Setting Up GCP Environment
-We set up a Virtual Machine (VM) on GCP to train our models, leveraging the computational power of the cloud.
+## Step 2: Setting Up Colab Environment
+We used Google Colab with a T4 GPU runtime to train our models. Colab provides a powerful and flexible environment for running intensive deep learning tasks with the added advantage of free access to high-performance GPUs.
 
 ## Step 3: Training the Models
 ### Model 1: Training on Blonde Female Portraits
@@ -27,26 +27,80 @@ We set up a Virtual Machine (VM) on GCP to train our models, leveraging the comp
 - Load blonde female images from Google Drive.
 - Preprocess the images (resize, normalize).
 - Build and train a GAN using the following architecture:
-  - Generator: Dense, Conv2DTranspose, LeakyReLU, and BatchNormalization layers.
-  - Discriminator: Conv2D, LeakyReLU, Dropout, and Dense layers.
-- Save the trained model locally.
-### Model 2: Training on Combined Blonde Female Portraits and Food Images
-**Objective:** Generate images combining blonde female portraits and food items.
+  - Generator:
+    - Dense layer to create a base structure.
+    - LeakyReLU activation.
+    - BatchNormalization for stability.
+    - Multiple Conv2DTranspose layers to upscale the image.
+    - Final Conv2D layer with 'tanh' activation to generate the image.
+
+  - Discriminator:
+    - Conv2D layers to downscale the image.
+    - LeakyReLU activation.
+    - Dropout layers to prevent overfitting.
+    - Flatten layer followed by a Dense layer with 'sigmoid' activation to classify images as real or fake.
+  - Training Process:
+    - Train the discriminator on real and fake images.
+    - Train the generator through the GAN model.
+    - Save the trained model checkpoints at regular intervals.
+### Model 2: Training on Blonde Female Portraits with WGAN-GP
+**Objective:** Generate high-quality images of blonde female portraits using WGAN-GP to address mode collapse and improve training stability.
 
 **Methodology:**
+
+- Load blonde female images from Google Drive.
+- Preprocess the images (resize, normalize).
+- Build and train a WGAN-GP using the following architecture:
+- Generator Architecture:
+
+  - Dense layer to create a base structure.
+  - LeakyReLU activation.
+  - BatchNormalization for stability.
+  - Multiple Conv2DTranspose layers to upscale the image.
+  - Final Conv2D layer with 'tanh' activation to generate the image.
+- Discriminator Architecture:
+
+  - Conv2D layers to downscale the image.
+  - LeakyReLU activation.
+  - Dropout layers to prevent overfitting.
+  - Flatten layer followed by a Dense layer.
+- WGAN-GP Specifics:
+
+  - Gradient penalty to enforce Lipschitz constraint.
+  - Custom loss functions for generator and discriminator.
+  - Adam optimizer with a lower learning rate for stable training.
+- Training Process:
+  
+  - Implement gradient penalty to enforce Lipschitz constraint.
+  - Define custom loss functions for generator and discriminator.
+  - Use Adam optimizer with a lower learning rate for stable training.
+  - Save the trained model checkpoints at regular intervals.
+ 
+### Model 3: Training on Combined Blonde Female Portraits and Food Images
+**Objective** Generate images combining blonde female portraits and food items.
+
+**Methodology**
 
 - Load blonde female images and food images from Google Drive.
 - Preprocess the images (resize, normalize).
 - Combine the two categories of images into a single dataset.
 - Build and train a GAN using the same architecture as Model 1.
-- Save the trained model locally.
-**Dealing with Combining and Labeling Two Different Categories of Photos:**
+**Combining and Labeling Two Different Categories of Photos**
 
-- **Combining the Datasets:** The blonde female images and food images were loaded separately and then combined into a single dataset. This ensures that the GAN is trained on a diverse set of images that include both categories.
-- **Preprocessing:** Each image, regardless of category, was resized to a uniform size of 128x128 pixels and normalized to a range of [-1, 1]. This standardization ensures consistency in the input data for the GAN.
-- **Training Approach:** The combined dataset was shuffled to ensure that the GAN receives a mix of both categories during each training iteration. This helps the generator learn to produce images that might creatively combine elements of both categories.
+- Combining the Datasets: The blonde female images and food images were loaded separately and then combined into a single dataset to ensure diverse training data.
+- Preprocessing: Each image, regardless of category, was resized to a uniform size of 128x128 pixels and normalized to a range of [-1, 1].
+- Training Approach: The combined dataset was shuffled to ensure that the GAN receives a mix of both categories during each training iteration.
+**Generator and Discriminator Architectures**
+
+- The generator and discriminator for this model have similar architectures to Model 1 but are optimized for a diverse dataset.
+**Training Process**
+
+- Train the discriminator on real and fake images.
+- Train the generator through the GAN model.
+- Save the trained model checkpoints at regular intervals.
+
 ## Step 4: Evaluating and Improving the Models
-Both models were trained and evaluated for their ability to generate high-quality images. Despite the training efforts, the models initially produced low-quality images. Various techniques were explored to improve the output quality, such as adjusting the network architecture and tuning hyperparameters.
+Models were trained and evaluated for their ability to generate high-quality images. Despite the training efforts, the models initially produced low-quality images. Various techniques were explored to improve the output quality, such as adjusting the network architecture and tuning hyperparameters. WGAN-GP was implemented to address mode collapse and improve image diversity.
 
 ## Step 5: Utilizing Existing AI Tools
 Recognizing the challenges in generating high-quality images, we explored using existing AI tools like Leonardo AI to generate content. These tools offered better quality and stability, which were crucial for our project goals.
