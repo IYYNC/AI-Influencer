@@ -63,6 +63,6 @@ This project demonstrates the potential of GANs in creating AI-generated content
 ## Credits
 This project was a collaborative effort, and I would like to thank our team members for their contributions:
 
-**Jodie Chen**
-**Florentina Santosa**
-**Manickashree Thayumana Sundaram**
+- **Jodie Chen**
+- **Florentina Santosa**
+- **Manickashree Thayumana Sundaram**
